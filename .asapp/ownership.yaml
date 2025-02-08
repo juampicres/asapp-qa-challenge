@@ -1,0 +1,7 @@
+ownership:
+    - name: qa_auto_challenge_prj
+      description: Challenge to share with qa-automation candidates
+      owner: team-qa-automation
+      humans-slack-channel: team-qa
+      service-health-dashboard: n/a
+      page-oncall-url: n/a

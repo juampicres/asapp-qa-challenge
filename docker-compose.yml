@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  api:
+    image: asapp-qa-challenge-api
+    ports:
+      - "5000:5000"
+  ui:
+    image: asapp-qa-challenge-ui
+    ports:
+      - "3000:3000"
+    command: ["./run.sh"]
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_MEMORY=512m
+      - SONAR_ES_HEAP_SIZE=512m
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:

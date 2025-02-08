@@ -1,0 +1,22 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "test suite",
+  "scripts": {
+    "cy:run:local": "cypress run --config-file cypress/local.config.ts",
+    "cy:open:local": "cypress open --e2e -b chrome --config-file cypress/local.config.ts",
+    "lint": "tsc --noEmit"
+  },
+  "author": "juampi caceres",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "webpack": "^5.97.1"
+  },
+  "dependencies": {
+    "@cypress/grep": "^4.1.0"
+  }
+}

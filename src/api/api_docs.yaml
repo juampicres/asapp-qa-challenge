@@ -1,0 +1,288 @@
+swagger: '2.0'
+info:
+  description: Documentation for the ASAPP QA Challenge Project APIs
+  version: 1.0.0
+  title: ASAPP QA Challenge Project
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: qa@asapp.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: localhost:5000
+basePath: ""
+tags:
+- name: Auth
+  description: User registration and login
+- name: Products
+  description: (Gated by user authentication)
+schemes:
+- http
+paths:
+  "/users/register":
+    post:
+      tags:
+      - Auth
+      summary: Register as a new user
+      description: ''
+      operationId: registerUser
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/xml
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User object to be registered with application
+        required: true
+        schema:
+          "$ref": "#/definitions/Register"
+      responses:
+        '200':
+          description: Successful operation
+        '409':
+          description: Duplicate entry
+  "/users/login":
+    post:
+      tags:
+      - Auth
+      summary: Login as an existing user
+      description: ''
+      operationId: loginUser
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/xml
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User object to authenticate
+        required: true
+        schema:
+          "$ref": "#/definitions/Login"
+      responses:
+        '200':
+          description: Operation successful
+        '401':
+          description: Invalid username/password combo
+  "/users/logout":
+    post:
+      tags:
+      - Auth
+      summary: Logout current session
+      description: ''
+      operationId: logoutUser
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/xml
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User to logout
+        required: true
+        schema:
+          "$ref": "#/definitions/Logout"
+      responses:
+        '200':
+          description: Operation successful
+        '400':
+          description: No active session
+  "/{username}/products":
+    get:
+      tags:
+      - Products
+      summary: Returns full inventory list
+      description: Returns list of product dictionaries
+      operationId: getProducts
+      parameters:
+      - in: path
+        name: username
+        description: Username
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: successful operation
+        '401':
+          description: User not authenticated
+  "/{username}/products/{product_name}":
+    get:
+      tags:
+      - Products
+      summary: Returns a specific product
+      description: ''
+      operationId: getProduct
+      parameters:
+      - in: path
+        name: username
+        description: Username
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: product_name
+        description: Product name
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/xml
+      - application/json
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Product does not exist
+        '401':
+          description: User not authenticated
+  "/{username}/products/{product_name}/add":
+    post:
+      tags:
+      - Products
+      summary: Add product to cart
+      description: 
+      operationId: addProduct
+      produces:
+      - application/xml
+      - application/json
+      parameters:
+      - in: path
+        name: username
+        description: Username
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: product_name
+        description: Product name
+        required: true
+        schema:
+          type: string
+      - in: body
+        name: body
+        description: Quantity of product needed
+        required: true
+        schema:
+          "$ref": "#/definitions/Add"
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Requesting more QTY than available in inventory, or product does
+            not exist
+        '401':
+          description: User not authenticated
+  "/{username}/products/cart":
+    get:
+      tags:
+      - Products
+      summary: Get Current Cart Info
+      description: 
+      operationId: getCart
+      parameters:
+      - in: path
+        name: username
+        description: Username
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/xml
+      - application/json
+      responses:
+        '200':
+          description: successful operation
+        '401':
+          description: User not authenticated
+  "/{username}/products/cart/{product_name}/remove":
+    post:
+      tags:
+      - Products
+      summary: Remove product from cart
+      description: 
+      operationId: addProduct
+      parameters:
+      - in: path
+        name: username
+        description: Username
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: product_name
+        description: Product name
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/xml
+      - application/json
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Product not in cart
+        '401':
+          description: User not authenticated
+  "/{username}/products/cart/checkout":
+    post:
+      tags:
+      - Products
+      summary: Check out all the products in the user's cart
+      description: This can only be done by the logged in user.
+      operationId: checkoutCart
+      parameters:
+      - in: path
+        name: username
+        description: Username
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/xml
+      - application/json
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Requesting more QTY than available in inventory
+        '401':
+          description: User not authenticated
+definitions:
+  Register:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  Login:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  Logout:
+    type: object
+    properties:
+      username:
+        type: string
+  Add:
+    type: object
+    properties:
+      quantity:
+        type: integer
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

@@ -1,0 +1,19 @@
+# tmp
+tmp/
+
+# Python
+*.pyc
+*.pickle
+*.npy
+*.DS_Store
+.cache/
+db.json
+site_packages/
+__pycache__/
+venv
+
+#node
+npm_modules/
+
+# tests
+tests/node_modules

@@ -1,0 +1,65 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.product-card {
+  display: inline-block;
+  width: 350px;
+  margin: 40px;
+}
+
+.product-card-content {
+  height: 150px;
+}
+
+.login-card {
+  width: 550px;
+  height: 200px;
+  margin: 40px;
+}
+
+.dlacy-coin {
+  margin: auto;
+  align-items: bottom;
+  max-width: 100px;
+  max-height: 100px;
+  height: 100px;
+  width: 100px;
+}
+
+.product-media {
+  height: 250px;
+}
+
+.cart-table {
+  width: 900px;
+}
+
+.cart-table-row {
+  height: 110px;
+  width: 100%;
+}
+
+select {
+  width: 60px;
+  height: 20px;
+}
