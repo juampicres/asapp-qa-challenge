@@ -4,6 +4,7 @@
 
 ## [Link 👈🏻](https://github.com/juampicres/asapp-qa-challenge/blob/main/tests/README.md)
 
+![Screenshot 2025-02-10 at 12 06 26 AM](https://github.com/user-attachments/assets/bff49fa2-37c0-4408-9d89-824f850189e0)
 
 ---------
 ## Pre-requisites
