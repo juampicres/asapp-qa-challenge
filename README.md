@@ -1,5 +1,11 @@
 # ASAPP - QA Automation Challenge
 
+## Testing Steps
+
+## [Link 👈🏻](https://github.com/juampicres/asapp-qa-challenge/blob/main/tests/README.md)
+
+
+---------
 ## Pre-requisites
 
 *Docker*
