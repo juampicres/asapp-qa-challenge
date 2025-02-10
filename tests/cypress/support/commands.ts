@@ -1,4 +1,6 @@
+import { Product } from "./../types";
 /// <reference types="cypress" />
+import "@cypress-audit/lighthouse/commands";
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -14,8 +16,10 @@ declare global {
     namespace Cypress {
         interface Chainable {
             register(email: string, password?: string): Chainable<{body, status: number}>
-            login(email: string, password: string): Chainable<void>
+            login(email?: string, password?: string): Chainable<void>
             logout(): Chainable<void>
+            seedDefaultUser(user: string, pwd: string): Chainable<void>
+            getProducts(username: string): Chainable<{Product}[]>
         }
     }
 }
@@ -42,8 +46,9 @@ Cypress.Commands.add('login', (username, password) => {
         failOnStatusCode: false,
         body: { username, password }    
     }).then((response) => {
-        console.log(response)
-        return response;
+        if(response.status === 401){
+            cy.register(username, password).then(() => { cy.login(username, password) })
+        }else{ return response }
     })
 })
 
@@ -59,20 +64,12 @@ Cypress.Commands.add('logout', () => {
         }).then((response) => {
             return response;
         })
-    })
-    
+    });
 })
 
-/* Cypress.Commands.add('auth', (username?, password?) => {
-    username ? username : Cypress.env('USERNAME');
-    password ? password : Cypress.env('PASSWORD');
-    cy.login(username, password).then((response) => {
-        cy.log(response);
-        cy.pause();
-        cy.register(username, password).then((response) => {
-        })
-    })
-}) */
+Cypress.Commands.add('seedDefaultUser', (user, pwd) => {
+    cy.register(user, pwd)
+});
 
 Cypress.Commands.add('dropDatabase', () => {
     cy.task('dropDatabase');
@@ -88,8 +85,6 @@ Cypress.Commands.add('resetStock', (username, products) => {
             method: 'POST',
             failOnStatusCode: false,
             url: `${Cypress.env('baseApi')}/${username}/products/cart/${product.product_name}/remove`,
-        }).then((response) => {
-            console.log(response.body);
         })
     })
 })

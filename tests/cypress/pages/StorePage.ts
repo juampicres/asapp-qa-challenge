@@ -1,7 +1,8 @@
 class StorePage{
 
     elements={
-        getAddToCartButton: () => cy.get('[data-test-name="add-to-cart-button"]'),    
+        addToCartButton: '[data-test-name="add-to-cart-button"]',    
+        qtySelect: '.MuiSelect-selectMenu',
     };
 
     getProductCard(productName: string){

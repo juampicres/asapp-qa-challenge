@@ -3,18 +3,33 @@
   "version": "1.0.0",
   "description": "test suite",
   "scripts": {
-    "cy:run:local": "cypress run --config-file cypress/local.config.ts",
-    "cy:open:local": "cypress open --e2e -b chrome --config-file cypress/local.config.ts",
+    "cy:run:local": "cypress run",
+    "cy:open:local": "cypress open --e2e -b chrome",
+    "test": "cypress open --component --config-file cypress/local-components.config.ts",
     "lint": "tsc --noEmit"
   },
   "author": "juampi caceres",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "@cypress-audit/lighthouse": "^1.4.2",
+    "autoprefixer": "^10.4.20",
+    "babel-loader": "^9.2.1",
+    "css-loader": "^7.1.2",
+    "cypress": "^14.0.2",
     "cypress-mochawesome-reporter": "^3.8.2",
+    "html-webpack-plugin": "^5.6.3",
+    "js-cookie": "^2.2.1",
+    "json-loader": "^0.5.7",
     "react-dom": "^19.0.0",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^3.4.16",
     "typescript": "^5.7.3",
-    "vite": "^6.1.0",
-    "webpack": "^5.97.1"
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
   },
   "dependencies": {
     "@cypress/grep": "^4.1.0"

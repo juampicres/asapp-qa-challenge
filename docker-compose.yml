@@ -2,13 +2,25 @@ version: '3.7'
 services:
   api:
     image: asapp-qa-challenge-api
+    container_name: backend
     ports:
       - "5000:5000"
   ui:
     image: asapp-qa-challenge-ui
+    container_name: client
     ports:
       - "3000:3000"
     command: ["./run.sh"]
+
+  cypress:
+    build: ./tests
+    container_name: cypress
+    depends_on:
+      - api
+      - ui
+    volumes:
+      - ./tests:/tests
+    command: npm run cy:run:local
 
   sonarqube:
     image: sonarqube:latest

@@ -6,7 +6,7 @@ context("Login Scenarios", () => {
         cy.visit("/");
     });
 
-    it("should login with invalid credentials", () => {
+    it("should not login with invalid credentials", () => {
         const username = faker.internet.username();
         const password = faker.internet.password();
         loginPage.login(username, password);
@@ -16,10 +16,21 @@ context("Login Scenarios", () => {
             loginPage.errorToastMessage("Incorrect Username or Password").should('be.visible');
         });
     });
+
+    it("should login with valid credentials & set user cookie", () => {
+        loginPage.login(Cypress.env('USERNAME'), Cypress.env('PASSWORD'));
+        cy.wait('@login').then((interception) => {
+            expect(interception.request.body).to.deep.eq({ username: Cypress.env('USERNAME'), password: Cypress.env('PASSWORD') });
+            expect(interception.response.statusCode).to.eq(200);
+            cy.getCookie("DLacy").then(cookie => {
+                expect(cookie.value).to.eq(Cypress.env('USERNAME'));
+            })
+        });
+    })
 });
 
 context("Logout Scenarios", () => {
-    it("should logout successfully removing session cookie", () => {
+    it("logout action should redirect user back to login removing session cookie", () => {
         loginPage.login(Cypress.env('USERNAME'), Cypress.env('PASSWORD'));
         cy.getCookie("DLacy").then(cookie => {
             expect(cookie).to.have.property('name', 'DLacy')
